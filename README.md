@@ -1,2 +1,2 @@
-# MultiplayerNodeSkeleton
-Skeleton for multiplayer node server project
+# WebChat
+Making a web chat to train with Node.js &amp; Socket.io

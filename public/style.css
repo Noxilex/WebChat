@@ -1,0 +1,72 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: #111111;
+}
+
+.container {
+    height: 100%;
+}
+
+#chat-container {
+    display: flex;
+    flex-flow: column;
+    position: absolute;
+    min-height: 300px;
+    min-width: 300px;
+    height: 100%;
+    width: 50%;
+    left: 25%;
+    padding: 5px;
+    margin: auto;
+    background-color: #444444;
+}
+
+#send-area {
+    display: flex;
+    flex: row;
+}
+
+#send-area textarea {
+    flex-grow: 1;
+    background-color: #444444;
+    color: white;
+    padding: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#send-area button {
+}
+#chat-history {
+    list-style: none;
+    margin: auto;
+    padding: 8px;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid black;
+    color: white;
+}
+
+#chat-history li {
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid rgba(100, 100, 100, 0.5);
+    border-radius: 5px;
+    background-color: rgba(200, 200, 200, 0.5);
+}
+
+.username {
+    color: black;
+    font-style: italic;
+}
+
+.message {
+
+}

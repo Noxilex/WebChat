@@ -15,10 +15,83 @@ api.get("/", function(request, response) {
   response.sendFile(path.join(__dirname, "public/index.html"));
 });
 
+//APP
+class Message {
+  constructor(content, user){
+    this.user = user;
+    this.content = content;
+  }
+}
+let chat = {
+  messages: []
+};
+
+//List of connected users
 let users = [];
+
+//List of chat users
+let chatUsers = [];
+
+//USER CONNECT
 io.on('connection', (socket) => {
-    socket.emit('new_user', users);
-    console.log("A new user has connected to the server");
+    //Add user to the list when they connect
+    let connected_user = {
+      id: socket.id,
+      name: "user"
+    };
+    users.push(connected_user);
+    console.log(connected_user, " has connected.");
+
+    //A connected user joins the chat
+    socket.on('userJoined', (name) => {
+      connected_user.name = name;
+      console.log(connected_user, " has joined the chat.");
+      chatUsers.push(connected_user);
+      socket.emit('chatJoined', chat.messages);
+      io.emit('userJoined', {
+        username:name,
+        chatUsers: chatUsers
+      });
+    })
+
+    //A connected user leaves the chat
+    socket.on('userLeft', () => {
+      removeUser(chatUsers, socket.id);
+      console.log(chatUsers);
+      io.emit('userLeft', {
+        username:connected_user.name,
+        chatUsers: chatUsers
+      });
+    });
+
+    socket.on('message', (message) => {
+
+      //Checks if the user is a chat user
+      if(chatUsers.includes(connected_user)){
+        //Add his message to the chat
+        let messageAdded = new Message(message, connected_user);
+        chat.messages.push(messageAdded);
+
+        console.log(messageAdded.user, " " ,messageAdded.content); 
+
+        //Broadcast message to everyone
+        io.emit('newMessage', messageAdded);
+      }
+    });
+
+    //USER DISCONNECT
+    socket.on('disconnect', () => {
+      if(chatUsers.includes(connected_user)){
+        removeUser(chatUsers, socket.id);
+        io.emit('userLeft', {
+          username:connected_user.name,
+          chatUsers: chatUsers
+        });
+      }
+      removeUser(users, socket.id);
+      console.log(connected_user, " has disconneted.");
+    })
+
 });
 
 // Starts the server.
@@ -26,3 +99,25 @@ server.listen(5000, "0.0.0.0", function() {
     console.log("Started server on port 5000");
 });
  
+function getUser(users, socketID){
+  users.forEach(user => {
+    if(user.id == socketID){
+      return user;
+    }
+  });
+  console.error("No user found with that ID:", socketID);
+  return null;
+}
+
+function getUserIndex(users, socketID){
+  for (let i = 0; i < users.length; i++) {
+    if(users[i].id == socketID)
+      return i;
+  }
+  console.error("No user found with that ID:", socketID);
+  return null;
+}
+
+function removeUser(users, socketID){
+  return users.splice(getUserIndex(users, socketID), 1);
+}

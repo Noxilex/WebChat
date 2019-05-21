@@ -76,8 +76,9 @@ function addMessage(message, user){
 
     userDom.classList.add("username");
     messageDom.classList.add("message");
-
-    userDom.innerText = user.name + ":";
+    if(user.name){
+        userDom.innerText = user.name + ":";
+    }
     messageDom.innerText = message.content;
 
     messageContent.appendChild(userDom);

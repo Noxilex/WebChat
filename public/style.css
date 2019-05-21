@@ -52,6 +52,15 @@ body {
     z-index: 2;
 }
 
+#chat-history li {
+    overflow: hidden;
+    padding: 5px;
+}
+
+#chat-history .username {
+    padding-right: 5px;
+}
+
 #connected-users-container{
     position: absolute;
     z-index: 3;

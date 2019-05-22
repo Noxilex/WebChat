@@ -85,6 +85,7 @@ function addMessage(message, user){
     messageContent.appendChild(messageDom);
 
     chat.appendChild(messageContent);
+    chat.scrollBy(0, chat.scrollHeight);
 }
 
 function updateConnectedUsers(newUsers){

@@ -100,6 +100,11 @@ body {
     background-color: rgba(200, 200, 200, 0.5);
 }
 
+
+#chat-history li span {
+    padding-right: 3px;
+}
+
 .username {
     color: black;
     font-style: italic;

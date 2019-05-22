@@ -1,7 +1,6 @@
 class Message {
     constructor(content="", user = new User()){
       this.dateCreated = new Date();
-      this.dateEdited;
       this.content = content;
       this.user = user;
     }
@@ -33,10 +32,11 @@ inputJoin.addEventListener("keypress", (event) => {
 
 
 function sendMessage(){
-    console.log(chatTextArea)
-    socket.emit('message', chatTextArea.value);
-    //addMessage(new Message(chatTextArea.value));
-    chatTextArea.value = "";
+    if(chatTextArea.value.length > 0 && chatTextArea.value.length <= 255){
+        socket.emit('message', chatTextArea.value);
+        //addMessage(new Message(chatTextArea.value));
+        chatTextArea.value = "";
+    }
 }
 
 socket.on('newMessage', (msgData) => {
@@ -47,6 +47,7 @@ socket.on('newMessage', (msgData) => {
 socket.on('chatJoined', (messages) => {
     console.log("Chat joined");
     messages.forEach(msgData => {
+        msgData.dateCreated = new Date(msgData.dateCreated);
         addMessage(msgData);
     });
 })
@@ -70,12 +71,12 @@ function updateMessages(messages){
 function joinChat(){
     let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
-    console.log(nameInput.value.length)
     if(nameInput.value.length >= 3){
         socket.emit('userJoined', nameInput.value.substring(0,20));
         joinArea.hidden = true;
     }else{
-
+        //TODO: Set error message if name is less than 3 characters long
+        throw new Error("User name is less than the required 3 characters long");
     }
 }
 

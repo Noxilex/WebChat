@@ -15,6 +15,7 @@ class User {
 
 var socket = io();
 var chatTextArea = document.querySelector("#chat-send");
+var inputJoin = document.querySelector("#join-chat input");
 var messages = [];
 var connectedUsers = [];
 
@@ -23,6 +24,13 @@ chatTextArea.addEventListener("keypress", (event) => {
         sendMessage();
     }
 })
+
+inputJoin.addEventListener("keypress", (event) => {
+    if(event.key == "Enter"){
+        joinChat();
+    }
+})
+
 
 function sendMessage(){
     console.log(chatTextArea)
@@ -62,8 +70,13 @@ function updateMessages(messages){
 function joinChat(){
     let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
-    socket.emit('userJoined', nameInput.value.substring(0,20));
-    joinArea.hidden = true;
+    console.log(nameInput.value.length)
+    if(nameInput.value.length >= 3){
+        socket.emit('userJoined', nameInput.value.substring(0,20));
+        joinArea.hidden = true;
+    }else{
+
+    }
 }
 
 function addMessage(message, user){

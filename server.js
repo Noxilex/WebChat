@@ -47,7 +47,11 @@ io.on('connection', (socket) => {
       connected_user.name = name;
       console.log(connected_user, " has joined the chat.");
       chatUsers.push(connected_user);
-      socket.emit('chatJoined', chat.messages);
+
+      //Sends the last 10 messages
+      let lastMessages = chat.messages.slice(-10);
+      socket.emit('chatJoined', lastMessages);
+      
       io.emit('userJoined', {
         username:name,
         chatUsers: chatUsers

@@ -13,7 +13,7 @@ body {
     display: flex;
     flex-flow: column;
     min-height: 300px;
-    min-width: 300px;
+    min-width: 500px;
     height: 100%;
     width: 50%;
     padding: 5px;
@@ -131,5 +131,6 @@ body {
 
     #chat-container {
         width: 100%;
+        min-width: 320px;
     }
 }

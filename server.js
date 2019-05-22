@@ -20,6 +20,7 @@ class Message {
   constructor(content, user){
     this.user = user;
     this.content = content;
+    this.dateCreated = new Date();
   }
 }
 let chat = {
@@ -76,7 +77,7 @@ io.on('connection', (socket) => {
         let messageAdded = new Message(message, connected_user);
         chat.messages.push(messageAdded);
 
-        console.log(messageAdded.user, " " ,messageAdded.content); 
+        console.log(messageAdded.user, " " , messageAdded.content); 
 
         //Broadcast message to everyone
         io.emit('newMessage', messageAdded);

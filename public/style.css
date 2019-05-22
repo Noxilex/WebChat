@@ -98,6 +98,12 @@ body {
 
 }
 
+.date {
+    color: #1e1e56;
+    font-size: 80%;
+    font-style: bold;
+}
+
 .white-border {
     border: 1px solid white;
 }

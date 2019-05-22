@@ -69,6 +69,7 @@ function joinChat(){
 function addMessage(message, user){
     let chat = document.querySelector("#chat-history");
     let messageContent = document.createElement("li");
+    let date = document.createElement("span");
     let userDom = document.createElement("span");
     let messageDom = document.createElement("span");
 
@@ -78,13 +79,17 @@ function addMessage(message, user){
 
     console.log(user)
 
+    date.classList.add("date");
     userDom.classList.add("username");
     messageDom.classList.add("message");
+
+    date.innerText = "["+message.dateCreated.getHours()+":"+message.dateCreated.getMinutes()+"]";
     if(user.name){
         userDom.innerText = user.name + ":";
     }
     messageDom.innerText = message.content;
 
+    messageContent.appendChild(date);
     messageContent.appendChild(userDom);
     messageContent.appendChild(messageDom);
 

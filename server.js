@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
     let connected_user = {
       id: socket.id,
       name: "user"
+      //Add a color element that is random for each user when they connect
     };
     users.push(connected_user);
     console.log(connected_user, " has connected.");

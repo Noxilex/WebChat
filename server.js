@@ -99,8 +99,8 @@ io.on('connection', (socket) => {
 });
 
 // Starts the server.
-server.listen(5000, "0.0.0.0", function() {
-    console.log("Started server on port 5000");
+server.listen(5001, "0.0.0.0", function() {
+    console.log("Started server on port 5001");
 });
  
 function getUser(users, socketID){

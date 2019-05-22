@@ -62,7 +62,7 @@ function updateMessages(messages){
 function joinChat(){
     let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
-    socket.emit('userJoined', nameInput.value);
+    socket.emit('userJoined', nameInput.value.substring(0,20));
     joinArea.hidden = true;
 }
 

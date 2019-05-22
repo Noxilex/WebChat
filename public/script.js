@@ -20,12 +20,16 @@ var connectedUsers = [];
 
 chatTextArea.addEventListener("keypress", (event) => {
     if(event.key == "Enter"){
-        console.log(chatTextArea)
-        socket.emit('message', chatTextArea.value);
-        //addMessage(new Message(chatTextArea.value));
-        chatTextArea.value = "";
+        sendMessage();
     }
 })
+
+function sendMessage(){
+    console.log(chatTextArea)
+    socket.emit('message', chatTextArea.value);
+    //addMessage(new Message(chatTextArea.value));
+    chatTextArea.value = "";
+}
 
 socket.on('newMessage', (msgData) => {
     console.log("New message")

@@ -30,6 +30,7 @@ npm start
 - [ ] Don't autoscroll when reading above
 - [ ] Refactor code to make it cleaner
 - [ ] Ping someone on @Username
+- [ ] Animations on click, onmessage
 
 ## Suggestion
 

@@ -34,6 +34,7 @@ var msgType = {
 var socket = io();
 var chatTextArea = document.querySelector("#chat-send");
 var inputJoin = document.querySelector("#join-chat input");
+var messageElement = document.querySelector("#chat-history li");
 var messages = [];
 var connectedUsers = [];
 
@@ -53,6 +54,7 @@ inputJoin.addEventListener("keypress", (event) => {
         joinChat();
     }
 })
+
 
 //=================== END LISTENERS =========================
 
@@ -248,6 +250,13 @@ function addMessage(message, user){
     messageContent.appendChild(date);
     messageContent.appendChild(userDom);
     messageContent.appendChild(messageDom);
+
+    date.style.display = "none";
+
+    messageContent.addEventListener("click", (event)=> {
+        //Toggle on/off
+        date.style.display = date.style.display == "none" ? "inline" : "none";
+    });
 
     chat.appendChild(messageContent);
     chat.scrollBy(0, chat.scrollHeight);

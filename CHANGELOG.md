@@ -4,6 +4,7 @@
 
 ### Added
 
+- Can rename to a multiple word name
 - /roll command
 - Error message in chat when user lose connexion to server
 - Feedback to user when command is executed

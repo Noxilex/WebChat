@@ -135,7 +135,7 @@ io.on('connection', (socket) => {
         case "rename":
           try{
             let previousUsername = connected_user.name;
-            changeUsername(connected_user, command.content.split(" ")[0]);
+            changeUsername(connected_user, command.content);
             result.status = "OK";
             result.message = "Changed username from " + previousUsername + " to " + connected_user.name;
           }catch(error){

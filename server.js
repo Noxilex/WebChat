@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
     };
 
     users.push(connected_user);
-    console.log(connected_user, " has connected.");
+    console.log(connected_user.name, " has connected.");
 
     //A connected user joins the chat
     socket.on('userJoined', (name) => {
@@ -54,21 +54,24 @@ io.on('connection', (socket) => {
       if(name.length >= 3 && name.length <= 20){
 
         connected_user.name = name;
-        console.log(connected_user, " has joined the chat.");
+        console.log(connected_user.name, " has joined the chat.");
+
         chatUsers.push(connected_user);
+        socket.join('chat', () => {
+          io.to('chat').emit('userJoined', {
+            username: name,
+            chatUsers: chatUsers
+          });
+        });
   
-        //Sends the last 10 messages
         let lastMessages = chat.messages.slice(-10);
         
+        //Sends the last 10 messages
         socket.emit('chatJoined', {
           status: "OK",
           content: lastMessages
         });
-        
-        io.emit('userJoined', {
-          username:name,
-          chatUsers: chatUsers
-        });
+
       }else{
         socket.emit('chatJoined', {
           status: "KO",
@@ -80,8 +83,7 @@ io.on('connection', (socket) => {
     //A connected user leaves the chat
     socket.on('userLeft', () => {
       removeUser(chatUsers, socket.id);
-      console.log(chatUsers);
-      io.emit('userLeft', {
+      io.to('chat').emit('userLeft', {
         username:connected_user.name,
         chatUsers: chatUsers
       });
@@ -126,7 +128,7 @@ io.on('connection', (socket) => {
             let diceRoll = Math.ceil(Math.random()*dice);
             result.message = connected_user.name + " rolls a "+ dice + " dice...";
             result.message += "\n Gets " + diceRoll;
-            io.emit('newMessage', {
+            io.to('chat').emit('newMessage', {
               content: result.message,
               tag: "infoMsg"
             });
@@ -156,14 +158,15 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
       if(chatUsers.includes(connected_user)){
         removeUser(chatUsers, socket.id);
-        io.emit('userLeft', {
+        
+        io.to('chat').emit('userLeft', {
           username:connected_user.name,
           chatUsers: chatUsers
         });
         socket.emit('disconnected');
       }
       removeUser(users, socket.id);
-      console.log(connected_user, " has disconneted.");
+      console.log(connected_user.name, " has disconneted.");
     })
 
 });

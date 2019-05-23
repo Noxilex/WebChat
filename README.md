@@ -28,7 +28,7 @@ npm start
 - [ ] Emojis interface
 - [ ] Don't autoscroll when reading above
 - [ ] Refactor code to make it cleaner
-
+- [ ] Ping someone on @Username
 
 ## Suggestion
 

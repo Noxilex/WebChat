@@ -8,7 +8,9 @@ class Message {
   
 class User {
     constructor(name="") {
+        this.id;
         this.name = name;
+        this.color;
     }
 }
 
@@ -95,9 +97,11 @@ function addMessage(message, user){
 
     date.classList.add("date");
     userDom.classList.add("username");
+    userDom.style.color = user.color;
     messageDom.classList.add("message");
 
-    date.innerText = "["+message.dateCreated.getHours()+":"+message.dateCreated.getMinutes()+"]";
+    let dateObj = message.dateCreated;
+    date.innerText = "["+pad(dateObj.getHours(),2)+":"+pad(dateObj.getMinutes(),2)+"]";
     if(user.name){
         userDom.innerText = user.name + ":";
     }
@@ -122,3 +126,11 @@ function updateConnectedUsers(newUsers){
     });
 }
 
+function pad(number, size){
+    let nbLeadingZeros = size - (number+"").length;
+    let result = "";
+    for(let i= 0; i < nbLeadingZeros; i++){
+        result += "0";
+    }
+    return result + number;
+}

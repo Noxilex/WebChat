@@ -14,3 +14,8 @@ npm install
 ```bash
 npm start
 ```
+
+## TODO 
+
+- [ ] Fix time missing leading 0
+- [ ] Add random color attribution for connected user

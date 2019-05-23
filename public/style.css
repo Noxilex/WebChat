@@ -108,6 +108,7 @@ body {
 .username {
     color: rgb(95, 10, 10);
     font-style: italic;
+    font-weight: bold;
 }
 
 .message {

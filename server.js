@@ -38,9 +38,11 @@ io.on('connection', (socket) => {
     //Add user to the list when they connect
     let connected_user = {
       id: socket.id,
-      name: "user"
+      name: "user",
+      color: randomColor()
       //Add a color element that is random for each user when they connect
     };
+
     users.push(connected_user);
     console.log(connected_user, " has connected.");
 
@@ -126,4 +128,8 @@ function getUserIndex(users, socketID){
 
 function removeUser(users, socketID){
   return users.splice(getUserIndex(users, socketID), 1);
+}
+
+function randomColor(){
+  return `hsl(${Math.floor(Math.random()*360)}, 100%, 35%)`
 }

@@ -1,3 +1,15 @@
+# Changelog
+
+## [0.0.3] - 2019-05-23
+
+### Added
+
+- Added colors to the usernames
+
+### Fixed
+
+- Fixed hour to print 00:00 format (previous version didn't have leading 0s)
+
 ## [0.0.2] - 2019-05-22
 
 ### Added

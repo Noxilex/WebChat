@@ -50,18 +50,31 @@ io.on('connection', (socket) => {
 
     //A connected user joins the chat
     socket.on('userJoined', (name) => {
-      connected_user.name = name;
-      console.log(connected_user, " has joined the chat.");
-      chatUsers.push(connected_user);
+      name = name.trim();
+      if(name.length >= 3 && name.length <= 20){
 
-      //Sends the last 10 messages
-      let lastMessages = chat.messages.slice(-10);
-      socket.emit('chatJoined', lastMessages);
-      
-      io.emit('userJoined', {
-        username:name,
-        chatUsers: chatUsers
-      });
+        connected_user.name = name;
+        console.log(connected_user, " has joined the chat.");
+        chatUsers.push(connected_user);
+  
+        //Sends the last 10 messages
+        let lastMessages = chat.messages.slice(-10);
+        
+        socket.emit('chatJoined', {
+          status: "OK",
+          content: lastMessages
+        });
+        
+        io.emit('userJoined', {
+          username:name,
+          chatUsers: chatUsers
+        });
+      }else{
+        socket.emit('chatJoined', {
+          status: "KO",
+          message: "Incorrect username, username must have between 3 & 20 characters"
+        })
+      }
     })
 
     //A connected user leaves the chat
@@ -89,15 +102,23 @@ io.on('connection', (socket) => {
      * }
      */
     socket.on('command', (command) => {
+      let result = {
+        status: "KO",
+        command: command,
+        message: ""
+      }
       switch (command.name) {
         case "color":
           //TODO: Validate input
           connected_user.color = command.content;
+          result.status = "OK";
+          result.message = "Username color was changed to " + command.content;
           break;
       
         default:
           break;
       }
+      socket.emit('commandResult', result)
     });
 
     //USER DISCONNECT
@@ -108,6 +129,7 @@ io.on('connection', (socket) => {
           username:connected_user.name,
           chatUsers: chatUsers
         });
+        socket.emit('disconnected');
       }
       removeUser(users, socket.id);
       console.log(connected_user, " has disconneted.");

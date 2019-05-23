@@ -1,8 +1,15 @@
+/**
+ * CODE
+ */
+
+//================== MODELS =================
 class Message {
     constructor(content="", user = new User()){
       this.dateCreated = new Date();
       this.content = content;
       this.user = user;
+      this.color;
+      this.tag="message";
     }
 }
   
@@ -14,11 +21,20 @@ class User {
     }
 }
 
+//================== END MODELS =================
+
+//================== EXEC CODE ==================
+
 var socket = io();
 var chatTextArea = document.querySelector("#chat-send");
 var inputJoin = document.querySelector("#join-chat input");
 var messages = [];
 var connectedUsers = [];
+
+
+//================== END EXEC CODE ==================
+
+//=================== LISTENERS =========================
 
 chatTextArea.addEventListener("keypress", (event) => {
     if(event.key == "Enter"){
@@ -32,23 +48,33 @@ inputJoin.addEventListener("keypress", (event) => {
     }
 })
 
+//=================== END LISTENERS =========================
 
-function sendMessage(){
-    let message = chatTextArea.value;
-    if(message.length > 0 && message.length <= 255){
-        if(message[0] == "/"){
-            let command = parseCommand(message);
-            console.log(command);
-            socket.emit('command', command);
-        }else{
-            socket.emit('message', message);
-        }
-        chatTextArea.value = "";
-    }else {
-        throw new Error("Message doesn't respect the dimensions, should be between 1 & 255 characters.");
+//=================== SOCKETS =========================
+
+socket.on('commandResult', result => {
+    let promptMessage = new Message();
+    promptMessage.content = result.message;
+    switch (result.status) {
+        case "OK":
+            switch (result.command.name) {
+                case "color":
+                    promptMessage.color = result.command.content;
+                    break;
+            
+                default:
+                    break;
+            }
+            break;
+        case "KO":
+
+            break;
+            
+        default:
+            break;
     }
-}
-
+    addMessage(promptMessage);
+})
 /**
  * A user has send a new message to the chat
  * (also applies to current user)
@@ -58,9 +84,18 @@ socket.on('newMessage', (msgData) => {
     addMessage(new Message(msgData.content, msgData.user));
 });
 
-socket.on('chatJoined', (messages) => {
-    console.log("Chat joined");
-    updateMessages(messages);
+socket.on('chatJoined', (object) => {
+    let status = object.status;
+    let messages = object.content;
+    let joinArea = document.querySelector("#join-chat");
+    if(status == "OK"){
+        console.log("Chat joined");
+        joinArea.hidden = true;
+        updateMessages(messages);
+    }else if(status == "KO"){
+        //TODO: Show error message for chat join error
+        throw new Error(object.message);
+    }
 })
 
 socket.on('userLeft', (userObj)=> {
@@ -75,6 +110,44 @@ socket.on('userJoined', (userObj)=> {
     updateConnectedUsers(connectedUsers);
 });
 
+
+
+socket.on('connect_error', function () { 
+    let errorMessage = new Message("Connexion lost to server. Please reload the page.");
+    errorMessage.tag = "errorMsg";
+    addMessage(errorMessage);
+    socket.destroy(); 
+});
+
+
+
+socket.on('disconnected', () => {
+    leaveChat();
+})
+
+//=============== END SOCKETS ===================
+
+/**
+ * END CODE
+ */
+
+ //=========== FUNCTIONS =================/
+
+function sendMessage(){
+    let message = chatTextArea.value;
+    if(message.length > 0 && message.length <= 255){
+        if(message[0] == "/"){
+            let command = parseCommand(message);
+            socket.emit('command', command);
+        }else{
+            socket.emit('message', message);
+        }
+        chatTextArea.value = "";
+    }else {
+        throw new Error("Message doesn't respect the dimensions, should be between 1 & 255 characters.");
+    }
+}
+
 function updateMessages(messages){
     messages.forEach(msgData => {
         msgData.dateCreated = new Date(msgData.dateCreated);
@@ -87,14 +160,23 @@ function updateMessages(messages){
  * the server will reply with a chatJoined event
  */
 function joinChat(){
-    let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
     if(nameInput.value.length >= 3){
         socket.emit('userJoined', nameInput.value.substring(0,20));
-        joinArea.hidden = true;
     }else{
         throw new Error("User name is less than the required 3 characters long");
     }
+}
+
+function leaveChat(){
+    let joinArea = document.querySelector("#join-chat");
+    let chatHistory = document.querySelector("#chat-history");
+
+    //Clear chat history
+    chatHistory.innerHTML = "";
+
+    //show joinArea
+    joinArea.hidden = false;
 }
 
 function parseCommand(message){
@@ -128,7 +210,9 @@ function addMessage(message, user){
     date.classList.add("date");
     userDom.classList.add("username");
     userDom.style.color = user.color;
-    messageDom.classList.add("message");
+    messageDom.classList.add(message.tag);
+    if(message.color)
+        messageDom.style.color = message.color;
 
     let dateObj = message.dateCreated;
     date.innerText = "["+pad(dateObj.getHours(),2)+":"+pad(dateObj.getMinutes(),2)+"]";
@@ -164,3 +248,5 @@ function pad(number, size){
     }
     return result + number;
 }
+
+//============== END FUNCTIONS ================ 

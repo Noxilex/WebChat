@@ -4,6 +4,7 @@
 
 ### Added
 
+
 - Error message in chat when user lose connexion to server
 - Feedback to user when command is executed
 - Command color support
@@ -15,7 +16,6 @@
 
 ### Fixed
 
-- 
 - Empty username
 - Fixed hour to print 00:00 format (previous version didn't have leading 0s)
 - Added max limit to the number of messages stored on the server messages array, prevents server memory overload

@@ -34,13 +34,25 @@ inputJoin.addEventListener("keypress", (event) => {
 
 
 function sendMessage(){
-    if(chatTextArea.value.length > 0 && chatTextArea.value.length <= 255){
-        socket.emit('message', chatTextArea.value);
-        //addMessage(new Message(chatTextArea.value));
+    let message = chatTextArea.value;
+    if(message.length > 0 && message.length <= 255){
+        if(message[0] == "/"){
+            let command = parseCommand(message);
+            console.log(command);
+            socket.emit('command', command);
+        }else{
+            socket.emit('message', message);
+        }
         chatTextArea.value = "";
+    }else {
+        throw new Error("Message doesn't respect the dimensions, should be between 1 & 255 characters.");
     }
 }
 
+/**
+ * A user has send a new message to the chat
+ * (also applies to current user)
+ */
 socket.on('newMessage', (msgData) => {
     console.log("New message")
     addMessage(new Message(msgData.content, msgData.user));
@@ -70,6 +82,10 @@ function updateMessages(messages){
     });
 }
 
+/**
+ * Fired when you join the chat,
+ * the server will reply with a chatJoined event
+ */
 function joinChat(){
     let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
@@ -79,6 +95,23 @@ function joinChat(){
     }else{
         throw new Error("User name is less than the required 3 characters long");
     }
+}
+
+function parseCommand(message){
+    let command = {
+        name:"",
+        content:""
+    }
+    //removes the '/'
+    let messageParsed = message.substring(1);
+    //Get an array of all elements splitted by " "
+    let args = messageParsed.trim().split(" ");
+    //First element is command name
+    command.name = args[0];
+    //Others elements are command content joined with space again
+    command.content = args.slice(1).join(" ");
+
+    return command;
 }
 
 function addMessage(message, user){

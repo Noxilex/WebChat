@@ -23,6 +23,7 @@ class Message {
     this.dateCreated = new Date();
   }
 }
+
 let chat = {
   maxMessage: 100,
   messages: []
@@ -78,6 +79,24 @@ io.on('connection', (socket) => {
       //Checks if the user is a chat user
       if(chatUsers.includes(connected_user)){
         addNewMessage(message, connected_user);
+      }
+    });
+
+    /**
+     * command = {
+     *  name,
+     *  content
+     * }
+     */
+    socket.on('command', (command) => {
+      switch (command.name) {
+        case "color":
+          //TODO: Validate input
+          connected_user.color = command.content;
+          break;
+      
+        default:
+          break;
       }
     });
 

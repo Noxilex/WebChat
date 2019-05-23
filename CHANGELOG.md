@@ -4,6 +4,7 @@
 
 ### Added
 
+- Command color support
 - Added colors to the usernames
 
 ### Changed

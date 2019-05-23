@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -23,9 +24,9 @@ body {
 
 .centered {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
 #send-area {
@@ -33,13 +34,46 @@ body {
     flex: row wrap;
 }
 
-#send-area #chat-send {
+.input-rounded {
     flex-grow: 1;
     background-color: #444444;
     color: white;
     padding: 5px;
-    margin-top: 5px;
     margin-right: 5px;
+    border-radius: 2em 2em 2em 2em;
+}
+
+#chat-container #join-chat{
+    padding:2em;
+}
+
+#join-chat .buttonBlue{
+    margin-top:20px;
+}
+
+#join-chat .input-rounded{
+    background-color:white;
+    color:black;
+    text-align:center;
+}
+
+.buttonBlue {
+    display: inline-block;
+    padding: 0.3em 1.2em;
+    margin: 0 0 0 0;
+    border-radius: 2em 2em 2em 2em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #FFFFFF;
+    background-color: #4eb5f1;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.buttonBlue:hover {
+    background-color: #4095c6;
 }
 
 .black {
@@ -58,7 +92,7 @@ body {
     box-shadow: 0px 5px 10px 10px #252525;
 }
 
-#join-chat input{
+#join-chat input {
     margin-bottom: 5px;
 }
 
@@ -71,7 +105,7 @@ body {
     padding-right: 5px;
 }
 
-#connected-users-container{
+#connected-users-container {
     position: absolute;
     z-index: 3;
     right: 0;
@@ -79,8 +113,7 @@ body {
     padding: 10px;
 }
 
-#send-area button {
-}
+#send-area button {}
 
 #chat-history {
     list-style: none;
@@ -109,7 +142,7 @@ body {
 .username {
     color: rgb(95, 10, 10);
     font-style: italic;
-    font-weight: bold;  
+    font-weight: bold;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
@@ -117,7 +150,7 @@ body {
     color: black;
 }
 
-.errorMsg{
+.errorMsg {
     color: darkred;
     font-style: italic;
 }
@@ -138,8 +171,8 @@ body {
     border: 1px solid white;
 }
 
-@media only screen and (max-width:500px){
-    #connected-users-container{
+@media only screen and (max-width:500px) {
+    #connected-users-container {
         display: none;
     }
 

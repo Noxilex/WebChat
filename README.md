@@ -17,5 +17,15 @@ npm start
 
 ## TODO 
 
-- [ ] Fix time missing leading 0
-- [ ] Add random color attribution for connected user
+- [X] Fix time missing leading 0
+- [X] Add random color attribution for connected user
+- [ ] Commands
+- [ ] Emojis interface
+
+## Suggestion
+
+- Profile picture
+- Games
+    - Quizz (Game of Thrones)
+    - 
+- Anime music

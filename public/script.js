@@ -48,10 +48,7 @@ socket.on('newMessage', (msgData) => {
 
 socket.on('chatJoined', (messages) => {
     console.log("Chat joined");
-    messages.forEach(msgData => {
-        msgData.dateCreated = new Date(msgData.dateCreated);
-        addMessage(msgData);
-    });
+    updateMessages(messages);
 })
 
 socket.on('userLeft', (userObj)=> {
@@ -67,7 +64,10 @@ socket.on('userJoined', (userObj)=> {
 });
 
 function updateMessages(messages){
-    
+    messages.forEach(msgData => {
+        msgData.dateCreated = new Date(msgData.dateCreated);
+        addMessage(msgData);
+    });
 }
 
 function joinChat(){
@@ -77,7 +77,6 @@ function joinChat(){
         socket.emit('userJoined', nameInput.value.substring(0,20));
         joinArea.hidden = true;
     }else{
-        //TODO: Set error message if name is less than 3 characters long
         throw new Error("User name is less than the required 3 characters long");
     }
 }
@@ -92,8 +91,6 @@ function addMessage(message, user){
     if(!user){
         user = message.user;
     }
-
-    console.log(user)
 
     date.classList.add("date");
     userDom.classList.add("username");

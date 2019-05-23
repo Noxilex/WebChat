@@ -94,6 +94,7 @@ body {
 
 #chat-history li {
     padding: 5px;
+    font-size: 1em;
     margin-top: 10px;
     border: 1px solid rgba(100, 100, 100, 0.5);
     border-radius: 5px;
@@ -108,7 +109,7 @@ body {
 .username {
     color: rgb(95, 10, 10);
     font-style: italic;
-    font-weight: bold;
+    font-weight: bold;  
 }
 
 .message {

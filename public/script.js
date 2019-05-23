@@ -69,6 +69,9 @@ socket.on('commandResult', result => {
                 case "color":
                     promptMessage.color = result.command.content;
                     break;
+                case "rename":
+                    updateConnectedUsers(result.content);
+                    break;
                 default:
                     console.log('No specific command behavior on client side for : ' + result.command.name);
                     break;

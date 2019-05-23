@@ -140,6 +140,7 @@ io.on('connection', (socket) => {
             changeUsername(connected_user, command.content);
             result.status = "OK";
             result.message = "Changed username from " + previousUsername + " to " + connected_user.name;
+            result.content = getUserNames();
           }catch(error){
             result.status = "KO";
             result.message = error;
@@ -176,6 +177,14 @@ server.listen(5001, "0.0.0.0", function() {
     console.log("Started server on port 5001");
 });
  
+
+function getUserNames(){
+  let usernames = [];
+  chatUsers.forEach(user => {
+    usernames.push({name:user.name});
+  });
+  return usernames
+}
 /**
  * Check the message array size before adding a new one
  * If the size is higher than the max, shift the first message

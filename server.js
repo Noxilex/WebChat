@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
     let connected_user = {
       id: socket.id,
       name: "user",
-      color: randomColor()
+      color: randomColor(50)
       //Add a color element that is random for each user when they connect
     };
 
@@ -130,6 +130,6 @@ function removeUser(users, socketID){
   return users.splice(getUserIndex(users, socketID), 1);
 }
 
-function randomColor(){
-  return `hsl(${Math.floor(Math.random()*360)}, 100%, 35%)`
+function randomColor(light){
+  return `hsl(${Math.floor(Math.random()*360)}, 100%, ${light}%)`
 }

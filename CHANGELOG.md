@@ -6,6 +6,10 @@
 
 - Added colors to the usernames
 
+### Changed
+
+- Changed username color style
+
 ### Fixed
 
 - Fixed hour to print 00:00 format (previous version didn't have leading 0s)

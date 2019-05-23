@@ -13,6 +13,7 @@
 ### Fixed
 
 - Fixed hour to print 00:00 format (previous version didn't have leading 0s)
+- Added max limit to the number of messages stored on the server messages array, prevents server memory overload
 
 ## [0.0.2] - 2019-05-22
 

@@ -24,6 +24,7 @@ class Message {
   }
 }
 let chat = {
+  maxMessage: 100,
   messages: []
 };
 
@@ -76,14 +77,7 @@ io.on('connection', (socket) => {
 
       //Checks if the user is a chat user
       if(chatUsers.includes(connected_user)){
-        //Add his message to the chat
-        let messageAdded = new Message(message, connected_user);
-        chat.messages.push(messageAdded);
-
-        console.log(messageAdded.user, " " , messageAdded.content); 
-
-        //Broadcast message to everyone
-        io.emit('newMessage', messageAdded);
+        addNewMessage(message, connected_user);
       }
     });
 
@@ -107,6 +101,29 @@ server.listen(5001, "0.0.0.0", function() {
     console.log("Started server on port 5001");
 });
  
+/**
+ * Check the message array size before adding a new one
+ * If the size is higher than the max, shift the first message
+ * then add the new one
+ */
+function addNewMessage(message, user){
+  //Add his message to the chat
+  let messageAdded = new Message(message, user);
+  
+  //If messages array has reached its limit, remove the last message
+  //Prevents memory overload
+  if(chat.messages.length >= chat.maxMessage){
+    chat.messages.shift();
+  }
+  //Then add the new one
+  chat.messages.push(messageAdded);
+
+  console.log(messageAdded.user, " " , messageAdded.content); 
+
+  //Broadcast message to everyone
+  io.emit('newMessage', messageAdded);
+}
+
 function getUser(users, socketID){
   users.forEach(user => {
     if(user.id == socketID){

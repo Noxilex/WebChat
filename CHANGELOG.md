@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fix 2 connexions created when clicking multiple times on join button
 - Empty username
 - Fixed hour to print 00:00 format (previous version didn't have leading 0s)
 - Added max limit to the number of messages stored on the server messages array, prevents server memory overload

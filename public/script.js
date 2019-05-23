@@ -59,6 +59,7 @@ inputJoin.addEventListener("keypress", (event) => {
 //=================== SOCKETS =========================
 
 socket.on('commandResult', result => {
+    console.log(result);
     let promptMessage = new Message();
     promptMessage.content = result.message;
     switch (result.status) {
@@ -81,6 +82,7 @@ socket.on('commandResult', result => {
         default:
             break;
     }
+    console.log(promptMessage);
     addMessage(promptMessage);
 })
 /**
@@ -105,6 +107,7 @@ socket.on('chatJoined', (object) => {
         joinArea.hidden = true;
         updateMessages(messages);
     }else if(status == "KO"){
+        joinArea.hidden = false;
         //TODO: Show error message for chat join error
         throw new Error(object.message);
     }
@@ -175,8 +178,10 @@ function updateMessages(messages){
  * the server will reply with a chatJoined event
  */
 function joinChat(){
+    let joinArea = document.querySelector("#join-chat");
     let nameInput = document.querySelector("#join-chat input");
     if(nameInput.value.length >= 3){
+        joinArea.hidden = true;
         socket.emit('userJoined', nameInput.value.substring(0,20));
     }else{
         throw new Error("User name is less than the required 3 characters long");

@@ -132,6 +132,18 @@ io.on('connection', (socket) => {
             });
           }
           break;
+        case "rename":
+          try{
+            let previousUsername = connected_user.name;
+            changeUsername(connected_user, command.content.split(" ")[0]);
+            result.status = "OK";
+            result.message = "Changed username from " + previousUsername + " to " + connected_user.name;
+          }catch(error){
+            result.status = "KO";
+            result.message = error;
+          }
+          socket.emit('commandResult', result);
+          break;
 
         default:
           result.status = "KO";
@@ -213,4 +225,12 @@ function randomColor(light){
 
 function isNumber(value){
   return !isNaN(parseInt(value)) && isFinite(value);
+}
+
+function changeUsername(user, newName){
+  if(newName.length >= 3 && newName.length <= 20){
+    user.name = newName;
+  }else{
+    throw new Error('New name dimensions are incorrect.');
+  }
 }

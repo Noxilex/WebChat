@@ -17,10 +17,18 @@ npm start
 
 ## TODO 
 
+- [ ] Fix chat receiving messages even when not connected to chat
+- [X] Fix 2 connexions created when clicking multiple times on join button
 - [X] Fix time missing leading 0
 - [X] Add random color attribution for connected user
 - [ ] Commands
+    - [ ] /rename
+    - [X] /roll
+    - [X] /color
 - [ ] Emojis interface
+- [ ] Don't autoscroll when reading above
+- [ ] Refactor code to make it cleaner
+
 
 ## Suggestion
 

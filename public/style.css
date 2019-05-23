@@ -122,6 +122,12 @@ body {
     font-style: italic;
 }
 
+.infoMsg {
+    color: rgb(0, 55, 150);
+    font-style: italic;
+
+}
+
 .date {
     color: #1e1e56;
     font-size: 80%;

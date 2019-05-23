@@ -113,12 +113,31 @@ io.on('connection', (socket) => {
           connected_user.color = command.content;
           result.status = "OK";
           result.message = "Username color was changed to " + command.content;
+          socket.emit('commandResult', result)
           break;
-      
+        case "roll":
+          let dice = parseInt(command.content.split(" ")[0], 10);
+          if( isNaN(dice)){
+            result.status = "KO";
+            result.message = "Argument provided for command wasn't a number";
+            socket.emit('commandResult', result);
+          }else{
+            result.status = "OK";
+            let diceRoll = Math.ceil(Math.random()*dice);
+            result.message = connected_user.name + " rolls a "+ dice + " dice...";
+            result.message += "\n Gets " + diceRoll;
+            io.emit('newMessage', {
+              content: result.message,
+              tag: "infoMsg"
+            });
+          }
+          break;
+
         default:
+          result.status = "KO";
+          result.message = "'"+command.name+"' command is not supported."; 
           break;
       }
-      socket.emit('commandResult', result)
     });
 
     //USER DISCONNECT
@@ -190,4 +209,8 @@ function removeUser(users, socketID){
 
 function randomColor(light){
   return `hsl(${Math.floor(Math.random()*360)}, 100%, ${light}%)`
+}
+
+function isNumber(value){
+  return !isNaN(parseInt(value)) && isFinite(value);
 }

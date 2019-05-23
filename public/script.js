@@ -9,7 +9,7 @@ class Message {
       this.content = content;
       this.user = user;
       this.color;
-      this.tag="message";
+      this.tag = msgType.message;
     }
 }
   
@@ -19,6 +19,12 @@ class User {
         this.name = name;
         this.color;
     }
+}
+
+var msgType = {
+    info: "infoMsg",
+    error: "errorMsg",
+    message: "message"
 }
 
 //================== END MODELS =================
@@ -57,17 +63,19 @@ socket.on('commandResult', result => {
     promptMessage.content = result.message;
     switch (result.status) {
         case "OK":
+            promptMessage.tag = msgType.info;
             switch (result.command.name) {
                 case "color":
                     promptMessage.color = result.command.content;
                     break;
-            
                 default:
+                    console.log('No specific command behavior on client side for : ' + result.command.name);
                     break;
             }
             break;
         case "KO":
-
+            promptMessage.tag = msgType.error;
+            console.error("Command: "+ result.command.name + " failed");
             break;
             
         default:
@@ -81,7 +89,11 @@ socket.on('commandResult', result => {
  */
 socket.on('newMessage', (msgData) => {
     console.log("New message")
-    addMessage(new Message(msgData.content, msgData.user));
+    let message = new Message(msgData.content, msgData.user);
+    if(msgData.tag){
+        message.tag = msgData.tag;
+    }
+    addMessage(message);
 });
 
 socket.on('chatJoined', (object) => {
@@ -105,7 +117,10 @@ socket.on('userLeft', (userObj)=> {
 });
 
 socket.on('userJoined', (userObj)=> {
-    addMessage(new Message(`${userObj.username} has joined the chat.`));
+    let infoMessage = new Message(`${userObj.username} has joined the chat.`);
+    //Same as the class name;
+    infoMessage.tag =  msgType.info;
+    addMessage(infoMessage);
     connectedUsers = userObj.chatUsers;
     updateConnectedUsers(connectedUsers);
 });
@@ -211,6 +226,7 @@ function addMessage(message, user){
     userDom.classList.add("username");
     userDom.style.color = user.color;
     messageDom.classList.add(message.tag);
+    console.log(message);
     if(message.color)
         messageDom.style.color = message.color;
 

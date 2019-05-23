@@ -99,6 +99,13 @@ body {
     border: 1px solid rgba(100, 100, 100, 0.5);
     border-radius: 5px;
     background-color: rgba(245, 245, 245, 0.5);
+    opacity: 0.8;
+    animation-duration: 1s;
+    animation-name: fadeIn;
+}
+
+#chat-history li:hover{
+    opacity: 1;
 }
 
 
@@ -129,6 +136,7 @@ body {
 }
 
 .date {
+    display: inline;
     color: #1e1e56;
     font-size: 80%;
     font-style: bold;
@@ -136,6 +144,10 @@ body {
 
 .white-border {
     border: 1px solid white;
+}
+
+.show {
+    visibility: visible;
 }
 
 @media only screen and (max-width:500px){
@@ -147,4 +159,18 @@ body {
         width: 100%;
         min-width: 320px;
     }
+
+    #chat-container .date{
+        display: none;
+    }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+  
+    to {
+        opacity: 0.8;
+    }
+  }

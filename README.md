@@ -22,7 +22,8 @@ npm start
 - [X] Fix time missing leading 0
 - [X] Add random color attribution for connected user
 - [ ] Commands
-    - [ ] /rename
+    - [ ] /help
+    - [X] /rename
     - [X] /roll
     - [X] /color
 - [ ] Emojis interface

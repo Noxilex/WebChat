@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 const express = require("express");
+const fetch = require("node-fetch");
 var http = require("http");
 var path = require("path");
 const socketIO = require("socket.io");
@@ -15,6 +17,14 @@ api.get("/", function(request, response) {
 	response.sendFile(path.join(__dirname, "public/index.html"));
 });
 
+generateCatBackground();
+setInterval(() => {
+	// eslint-disable-next-line no-unused-vars
+	generateCatBackground(url => {
+		sendCatBackground();
+	});
+}, 60 * 1000);
+
 //APP
 class Message {
 	constructor(content, user) {
@@ -25,10 +35,9 @@ class Message {
 }
 
 class Command {
-  constructor(name, description) {
-    this.name = name,
-    this.description = description;
-  }
+	constructor(name, description) {
+		(this.name = name), (this.description = description);
+	}
 }
 
 let chat = {
@@ -36,16 +45,27 @@ let chat = {
 	messages: []
 };
 
+var catBackground;
+
 //List of connected users
 let users = [];
 
 //List commands
 let commands = {
-  help: new Command("help"),
-  rename: new Command("rename", "/rename <name> - name length between 3 to 20 characters"),
-  color: new Command("color", "/color <color> - Any color code (rgb, rgba, hex, hsl...), if the code is not valid the color will be black"),
-  roll: new Command("roll", "/roll <max_value> - Will roll a dice between 1 & max_value")
-}
+	help: new Command("help"),
+	rename: new Command(
+		"rename",
+		"/rename <name> - name length between 3 to 20 characters"
+	),
+	color: new Command(
+		"color",
+		"/color <color> - Any color code (rgb, rgba, hex, hsl...), if the code is not valid the color will be black"
+	),
+	roll: new Command(
+		"roll",
+		"/roll <max_value> - Will roll a dice between 1 & max_value"
+	)
+};
 commands.help.description = getAllCommandsHelp();
 
 //List of chat users
@@ -77,6 +97,7 @@ io.on("connection", socket => {
 					username: name,
 					chatUsers: chatUsers
 				});
+				sendCatBackground(socket);
 			});
 
 			let lastMessages = chat.messages.slice(-10);
@@ -125,9 +146,9 @@ io.on("connection", socket => {
 		};
 		switch (command.name) {
 			case "help":
-        result.status = "OK";
-        result.message = commands.help.description;
-        socket.emit("commandResult", result);
+				result.status = "OK";
+				result.message = commands.help.description;
+				socket.emit("commandResult", result);
 				break;
 			case "color":
 				//TODO: Validate input
@@ -138,6 +159,7 @@ io.on("connection", socket => {
 				socket.emit("commandResult", result);
 				break;
 			case "roll":
+				// eslint-disable-next-line no-case-declarations
 				let dice = parseInt(command.content.split(" ")[0], 10);
 				if (isNaN(dice)) {
 					result.status = "KO";
@@ -227,16 +249,6 @@ function addNewMessage(message, user) {
 	io.emit("newMessage", messageAdded);
 }
 
-function getUser(users, socketID) {
-	users.forEach(user => {
-		if (user.id == socketID) {
-			return user;
-		}
-	});
-	console.error("No user found with that ID:", socketID);
-	return null;
-}
-
 function getUserIndex(users, socketID) {
 	for (let i = 0; i < users.length; i++) {
 		if (users[i].id == socketID) return i;
@@ -253,6 +265,7 @@ function randomColor(light) {
 	return `hsl(${Math.floor(Math.random() * 360)}, 100%, ${light}%)`;
 }
 
+// eslint-disable-next-line no-unused-vars
 function isNumber(value) {
 	return !isNaN(parseInt(value)) && isFinite(value);
 }
@@ -265,13 +278,34 @@ function changeUsername(user, newName) {
 	}
 }
 
-function getAllCommandsHelp(){
-  let result = "";
-  for(var prop in commands){
-    if(prop != "help")
-      result += commands[prop].description + "\n";
-  }
-  return result;
+function getAllCommandsHelp() {
+	let result = "";
+	for (var prop in commands) {
+		if (prop != "help") result += commands[prop].description + "\n";
+	}
+	return result;
+}
+
+function generateCatBackground(callback) {
+	fetch("https://api.thecatapi.com/v1/images/search")
+		.then(function(response) {
+			return response.json();
+		})
+		.then(jsonData => {
+			catBackground = jsonData[0].url;
+			callback(catBackground);
+		})
+		.catch(error => {
+			console.error(error);
+		});
+}
+
+function sendCatBackground(socket) {
+	if (socket) {
+		socket.emit("changeBackground", catBackground);
+	} else {
+		io.to("chat").emit("changeBackground", catBackground);
+	}
 }
 
 // Starts the server.

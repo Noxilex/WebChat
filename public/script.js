@@ -181,7 +181,8 @@ socket.on("doWizz", () => {
 //=========== FUNCTIONS =================/
 
 function sendMessage() {
-	let message = chatTextArea.value;
+    let message = chatTextArea.value;
+    message = message.trim();
 	if (message.length > 0 && message.length <= 255) {
 		if (message[0] == "/") {
 			let command = parseCommand(message);
@@ -191,6 +192,7 @@ function sendMessage() {
 		}
 		chatTextArea.value = "";
 	} else {
+        chatTextArea.value = "";
 		throw new Error(
 			"Message doesn't respect the dimensions, should be between 1 & 255 characters."
 		);

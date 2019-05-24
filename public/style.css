@@ -19,7 +19,6 @@ body {
 	min-height: 300px;
 	min-width: 500px;
 	height: 100%;
-	width: 50%;
 	padding: 5px;
 	margin: auto;
 	background-color: rgba(100, 100, 100, 0.8);
@@ -29,13 +28,17 @@ body {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%); 
+}
+
+#chat-send-container {
+    display: flex;
 }
 
 #send-area {
-	display: flex;
-	flex: row wrap;
-	margin-top: 5px;
+    display: flex;
+    flex: row wrap;
+    flex-direction: column;
 }
 
 .input-rounded {
@@ -48,18 +51,24 @@ body {
 	border-radius: 2em 2em 2em 2em;
 }
 
-#join-chat {
-	padding: 2em;
-}
-
-#join-chat .buttonBlue {
-	margin-top: 6px;
-}
-
 #join-chat .input-rounded {
-	background-color: white;
-	color: black;
-	text-align: center;
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+
+#join-chat {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px 10px #252525;
 }
 
 .buttonBlue {
@@ -84,21 +93,6 @@ body {
 .black {
 	background-color: #444444;
 	color: white;
-}
-
-#join-chat {
-	display: flex;
-	flex-flow: column wrap;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-	padding: 10px;
-	border-radius: 10px;
-	box-shadow: 0px 5px 10px 10px #252525;
-}
-
-#join-chat input {
-	margin-bottom: 5px;
 }
 
 #chat-history li {
@@ -214,17 +208,69 @@ body {
 		min-width: 320px;
 	}
 
-	#chat-container .date {
-		display: none;
+    #chat-container .date {
+        display: none;
+	}
+
+	.container{
+		padding:0;
 	}
 }
 
 @keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.8;
+    }
+  }
 
-	to {
-		opacity: 0.8;
-	}
+/* ACTIONS BOX */
+#actions {
+    margin: 0 10px;
+}
+
+/* WIZZ STYLE  */
+#wizzBtn {
+    font-size: 2rem;
+    border-radius: 50%;
+    border-color: rgba(245, 245, 245, 0);
+    background-color: rgba(245, 245, 245, 0);
+}
+
+.actions-btn:hover {
+    transform: scale(1.2);
+}
+
+.wizzAnimation {
+    animation: shake 0.3s;
+    overflow-y: hidden;
+}
+
+@keyframes shake {
+
+    0%,
+    45%,
+    90% {
+        transform: translate(-10px, -10px);
+    }
+
+    20%,
+    75%,
+    46% {
+        transform: translate(10px, -10px);
+    }
+
+    30%,
+    100%,
+    70% {
+        transform: translate(10px, 10px);
+    }
+
+    80%,
+    62%,
+    40% {
+        transform: translate(-10px, 10px);
+    }
 }

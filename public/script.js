@@ -156,6 +156,21 @@ socket.on('disconnected', () => {
     leaveChat();
 })
 
+// reçois lors d'un wizz
+socket.on('doWizz', wizzClass => {
+    var container = document.querySelector("#chat-container")
+    // si la class existe , return;
+    if(container.classList.contains('wizzAnimation')) return;
+
+    // sinon
+    container.classList.add('wizzAnimation');
+    setTimeout(function(){
+        //do what you need here
+        container.classList.remove('wizzAnimation');
+    }, 1000);
+    
+})
+
 //=============== END SOCKETS ===================
 
 /**
@@ -177,6 +192,10 @@ function sendMessage(){
     }else {
         throw new Error("Message doesn't respect the dimensions, should be between 1 & 255 characters.");
     }
+}
+
+function sendWizz(){
+    socket.emit('wizz');
 }
 
 function updateMessages(messages){

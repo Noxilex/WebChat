@@ -170,6 +170,10 @@ io.on('connection', (socket) => {
       console.log(connected_user.name, " has disconneted.");
     })
 
+    // Listen for wizz input then emit doWizz
+    socket.on('wizz', () => {
+      io.to("chat").emit("doWizz");
+    });
 });
 
 // Starts the server.

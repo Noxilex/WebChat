@@ -7,6 +7,8 @@ Making a web chat to train with Node.js &amp; Socket.io
 
 ## Install
 ```bash
+git clone https://github.com/Noxilex/WebChat
+cd WebChat
 npm install
 ```
 

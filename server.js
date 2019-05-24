@@ -171,11 +171,6 @@ io.on('connection', (socket) => {
     })
 
 });
-
-// Starts the server.
-server.listen(5001, "0.0.0.0", function() {
-    console.log("Started server on port 5001");
-});
  
 
 function getUserNames(){
@@ -246,3 +241,8 @@ function changeUsername(user, newName){
     throw new Error('New name dimensions are incorrect.');
   }
 }
+
+// Starts the server.
+server.listen(5001, "0.0.0.0", function() {
+    console.log("Started server on port 5001");
+});

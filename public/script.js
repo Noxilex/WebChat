@@ -230,13 +230,13 @@ function addMessage(message){
     let date = document.createElement("span");
     let messageDom = document.createElement("span");
 
-
-
     date.classList.add("date");
-    let tagList = message.tag.split(',');
-    tagList.forEach(tag => {
-        messageDom.classList.add(tag);
-    });
+    if(message.tag){
+        let tagList = message.tag.split(',');
+        tagList.forEach(tag => {
+            messageDom.classList.add(tag);
+        });
+    }
     console.log(message);
     if(message.color)
         messageDom.style.color = message.color;

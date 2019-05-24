@@ -4,7 +4,7 @@
 
 //================== MODELS =================
 class Message {
-    constructor(content="", user = new User()){
+    constructor(content="", user){
       this.dateCreated = new Date();
       this.content = content;
       this.user = user;
@@ -38,6 +38,12 @@ var messageElement = document.querySelector("#chat-history li");
 var messages = [];
 var connectedUsers = [];
 
+inputJoin.focus();
+
+getRandomCatBackground(); 
+setInterval(() => {
+    getRandomCatBackground(); 
+}, 60*1000);
 
 //================== END EXEC CODE ==================
 
@@ -70,6 +76,7 @@ socket.on('commandResult', result => {
             switch (result.command.name) {
                 case "color":
                     promptMessage.color = result.command.content;
+                    promptMessage.tag += ",outline";
                     break;
                 case "rename":
                     updateConnectedUsers(result.content);
@@ -111,6 +118,7 @@ socket.on('chatJoined', (object) => {
         console.log("Chat joined");
         joinArea.hidden = true;
         updateMessages(messages);
+        chatTextArea.focus();
     }else if(status == "KO"){
         joinArea.hidden = false;
         //TODO: Show error message for chat join error
@@ -221,44 +229,53 @@ function parseCommand(message){
     return command;
 }
 
-function addMessage(message, user){
+function addMessage(message){
     let chat = document.querySelector("#chat-history");
     let messageContent = document.createElement("li");
     let date = document.createElement("span");
-    let userDom = document.createElement("span");
     let messageDom = document.createElement("span");
 
-    if(!user){
-        user = message.user;
-    }
-
     date.classList.add("date");
-    userDom.classList.add("username");
-    userDom.style.color = user.color;
-    messageDom.classList.add(message.tag);
+    if(message.tag){
+        let tagList = message.tag.split(',');
+        tagList.forEach(tag => {
+            messageDom.classList.add(tag);
+        });
+    }
     console.log(message);
     if(message.color)
         messageDom.style.color = message.color;
 
     let dateObj = message.dateCreated;
     date.innerText = "["+pad(dateObj.getHours(),2)+":"+pad(dateObj.getMinutes(),2)+"]";
-    if(user.name){
-        userDom.innerText = user.name + ":";
-    }
     messageDom.innerText = message.content;
 
-    messageContent.appendChild(date);
-    messageContent.appendChild(userDom);
-    messageContent.appendChild(messageDom);
 
-    date.style.display = "none";
+    messageContent.appendChild(date);
+    //Append the user to the DOM only if a user is associated to the message
+    if(message.user){
+        let userDom = document.createElement("span");
+        userDom.classList.add("username");
+        userDom.style.color = message.user.color;
+        if(message.user.name){
+            userDom.innerText = message.user.name + ":";
+        }
+        messageContent.appendChild(userDom);
+    }
+    messageContent.appendChild(messageDom);
 
     messageContent.addEventListener("click", (event)=> {
         //Toggle on/off
-        date.style.display = date.style.display == "none" ? "inline" : "none";
+        console.log(date);
+        if(date.classList.contains("show")){
+            date.classList.remove("show");
+        }else{
+            date.classList.add("show");
+        }
     });
 
     chat.appendChild(messageContent);
+    //TODO: Only scroll if at bottom of scroll
     chat.scrollBy(0, chat.scrollHeight);
 }
 
@@ -282,4 +299,28 @@ function pad(number, size){
     return result + number;
 }
 
+function changeBackground(url){
+    loadImage(url, (image) => {
+        let body = document.querySelector("body");
+        body.style.background = "url("+image.src+")";
+    })
+}
+
+function getRandomCatBackground(){
+    fetch("https://api.thecatapi.com/v1/images/search").then(function(response) {
+        return response.json();
+    }).then(jsonData => {
+        changeBackground(jsonData[0].url);
+    }).catch(error => {
+        console.error(error);
+    });
+}
+
+function loadImage(url, callback){
+    let img = document.createElement("img");
+    img.onload = () => {
+        callback(img);
+    }
+    img.src = url;
+}
 //============== END FUNCTIONS ================ 

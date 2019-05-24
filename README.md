@@ -24,8 +24,8 @@ npm start
 - [X] Fix 2 connexions created when clicking multiple times on join button
 - [X] Fix time missing leading 0
 - [X] Add random color attribution for connected user
-- [ ] Commands
-    - [ ] /help
+- [X] Commands
+    - [X] /help
     - [X] /rename
     - [X] /roll
     - [X] /color
@@ -34,6 +34,8 @@ npm start
 - [ ] Refactor code to make it cleaner
 - [ ] Ping someone on @Username
 - [ ] Animations on click, onmessage
+- [ ] Timeout before sending new message
+- [ ] Auto-reconnect after DC
 
 ## Suggestion
 

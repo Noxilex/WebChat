@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.0.4] - 2019-05-24
+
+### Added
+
+- Outline on /color message info
+- /help command
+
+### Changed
+
+- Now shows date on mobile when we press the message 
+
+### Fixed
+
+- Empty username are no longer added to dom (taking small space in front of message)
+- Black is base color for chat history
+- User-select in chat history
+
+### Removed
+
+### Security
+
+
 ## [0.0.3] - 2019-05-23
 
 ### Added

@@ -113,7 +113,9 @@ body {
 
 #chat-history li {
 	overflow: hidden;
-	padding: 5px;
+    padding: 5px;
+    box-shadow: 1px 1px 1px 1px #252525;
+    margin-right: 2px;
 }
 
 #chat-history .username {
@@ -131,7 +133,7 @@ body {
 #chat-history {
 	list-style: none;
 	margin: auto;
-	padding: 0;
+    padding: 0;
 	height: 100%;
 	width: 100%;
 	overflow: auto;
@@ -145,13 +147,13 @@ body {
 #chat-history li {
 	padding: 5px;
 	font-size: 1em;
-	margin-top: 10px;
+    margin-bottom: 5px;
 	border: 1px solid rgba(100, 100, 100, 0.5);
 	border-radius: 5px;
 	background-color: rgba(245, 245, 245, 0.5);
 	opacity: 0.8;
-	animation-duration: 1s;
-	animation-name: fadeIn;
+	animation-duration: 0.5s;
+	animation-name: popIn;
 }
 
 #chat-history li:hover {
@@ -244,6 +246,35 @@ body {
 	to {
 		opacity: 0.8;
 	}
+}
+
+@keyframes fallIn {
+	from {
+        opacity: 0;
+        box-shadow: 10px 10px 10px 10px #252525;
+        left:-20;
+        top:-20;
+	}
+
+	to {
+		opacity: 0.8;
+        box-shadow: 1px 1px 1px 1px #252525;
+        transform: translate(0,0);
+        left:0;
+        top:0;
+	}
+}
+
+@keyframes popIn {
+	from {
+        opacity: 0;
+        transform: scale(0.5)
+	}
+
+	to {
+		opacity: 0.8;
+        transform: scale(1)
+    }
 }
 
 @keyframes shake {

@@ -83,6 +83,11 @@ io.on("connection", socket => {
 
 	users.push(connected_user);
 	console.log(connected_user.name, " has connected.");
+	
+    // Listen for wizz input then emit doWizz
+    socket.on('wizz', () => {
+      io.to("chat").emit("doWizz");
+    });
 
 	//A connected user joins the chat
 	socket.on("userJoined", name => {

@@ -184,7 +184,7 @@ body {
 }
 
 .show {
-    visibility: visible;
+    display: inline-block !important;
 }
 
 @media only screen and (max-width:500px){

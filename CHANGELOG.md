@@ -8,6 +8,8 @@
 
 ### Changed
 
+- Now shows date on mobile when we press the message 
+
 ### Fixed
 
 - Empty username are no longer added to dom (taking small space in front of message)

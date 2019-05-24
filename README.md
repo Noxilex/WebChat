@@ -35,6 +35,8 @@ npm start
 - [ ] Ping someone on @Username
 - [ ] Animations on click, onmessage
 - [ ] Timeout before sending new message
+- [ ] Auto-reconnect after DC
+
 ## Suggestion
 
 - Profile picture

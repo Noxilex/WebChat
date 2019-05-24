@@ -255,11 +255,14 @@ function addMessage(message){
     }
     messageContent.appendChild(messageDom);
 
-    date.style.display = "none";
-
     messageContent.addEventListener("click", (event)=> {
         //Toggle on/off
-        date.style.display = date.style.display == "none" ? "inline" : "none";
+        console.log(date);
+        if(date.classList.contains("show")){
+            date.classList.remove("show");
+        }else{
+            date.classList.add("show");
+        }
     });
 
     chat.appendChild(messageContent);

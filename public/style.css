@@ -49,8 +49,6 @@ body {
 }
 
 #send-area {
-	display: flex;
-	flex-flow: column nowrap;
 }
 
 .input-rounded {

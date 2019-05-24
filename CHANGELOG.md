@@ -1,5 +1,21 @@
 # Changelog
 
+## [Version] - 2019-05-24
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Black is base color for chat history
+- User-select in chat history
+
+### Removed
+
+### Security
+
+
 ## [0.0.3] - 2019-05-23
 
 ### Added

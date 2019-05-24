@@ -210,7 +210,11 @@ body {
 
     #chat-container .date {
         display: none;
-    }
+	}
+
+	.container{
+		padding:0;
+	}
 }
 
 @keyframes fadeIn {

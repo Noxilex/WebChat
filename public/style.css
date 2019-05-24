@@ -179,8 +179,13 @@ body {
 	border: 1px solid white;
 }
 
-.show {
-	display: inline-block !important;
+
+.show-block {
+	display: inline !important;
+}
+
+.show-inline {
+	display: inline !important;
 }
 
 .fadeInAnimation {

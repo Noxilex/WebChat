@@ -9,10 +9,11 @@
 
 ### Changed
 
-- Now shows date on mobile when we press the message 
+- Now shows date on mobile when we press the message
 
 ### Fixed
 
+- Can't send empty messages with spaces
 - Empty username are no longer added to dom (taking small space in front of message)
 - Black is base color for chat history
 - User-select in chat history

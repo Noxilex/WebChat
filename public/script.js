@@ -182,8 +182,8 @@ socket.on("doWizz", () => {
 
 function sendMessage() {
     let message = chatTextArea.value;
-    message = message.trim();
-	if (message.length > 0 && message.length <= 255) {
+    let msgTrimmed = message.trim();
+	if (msgTrimmed.length > 0 && msgTrimmed.length <= 255) {
 		if (message[0] == "/") {
 			let command = parseCommand(message);
 			socket.emit("command", command);

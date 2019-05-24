@@ -267,10 +267,10 @@ function addMessage(message){
     messageContent.addEventListener("click", (event)=> {
         //Toggle on/off
         console.log(date);
-        if(date.classList.contains("show")){
-            date.classList.remove("show");
+        if(date.classList.contains("show-inline")){
+            date.classList.remove("show-inline");
         }else{
-            date.classList.add("show");
+            date.classList.add("show-inline");
         }
     });
 

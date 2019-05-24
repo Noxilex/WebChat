@@ -71,6 +71,7 @@ socket.on('commandResult', result => {
             switch (result.command.name) {
                 case "color":
                     promptMessage.color = result.command.content;
+                    promptMessage.tag += ",outline";
                     break;
                 case "rename":
                     updateConnectedUsers(result.content);
@@ -232,7 +233,10 @@ function addMessage(message){
 
 
     date.classList.add("date");
-    messageDom.classList.add(message.tag);
+    let tagList = message.tag.split(',');
+    tagList.forEach(tag => {
+        messageDom.classList.add(tag);
+    });
     console.log(message);
     if(message.color)
         messageDom.style.color = message.color;

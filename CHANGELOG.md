@@ -4,6 +4,7 @@
 
 ### Added
 
+- Outline on /color message info
 - /help command
 
 ### Changed

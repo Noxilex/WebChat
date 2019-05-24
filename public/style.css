@@ -213,7 +213,8 @@ body {
 
 /* ACTIONS BOX */
 #actions {
-	margin: 0 10px;
+    margin: 0 10px;
+    box-sizing: border-box;
 }
 
 /* WIZZ STYLE  */

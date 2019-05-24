@@ -90,7 +90,8 @@ body {
 	box-sizing: border-box;
 	text-decoration: none;
 	font-family: "Roboto", sans-serif;
-	font-weight: 300;
+    font-weight: 300;
+    min-height: 37px;
 	color: #ffffff;
 	background-color: rgb(100, 100, 236);
 	text-align: center;

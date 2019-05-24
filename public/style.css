@@ -7,7 +7,10 @@ body {
 }
 
 body {
-	background-color: #111111;
+    background-color: #111111;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 #chat-container {
@@ -19,7 +22,7 @@ body {
 	width: 50%;
 	padding: 5px;
 	margin: auto;
-	background-color: #444444;
+	background-color: rgba(100, 100, 100, 0.8);
 }
 
 .centered {
@@ -189,6 +192,11 @@ body {
 
 .show {
 	display: inline-block !important;
+}
+
+.fadeInAnimation {
+	animation-duration: 1s;
+	animation-name: fadeIn;
 }
 
 @media only screen and (max-width: 500px) {

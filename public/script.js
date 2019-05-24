@@ -40,6 +40,11 @@ var connectedUsers = [];
 
 inputJoin.focus();
 
+getRandomCatBackground(); 
+setInterval(() => {
+    getRandomCatBackground(); 
+}, 60*1000);
+
 //================== END EXEC CODE ==================
 
 //=================== LISTENERS =========================
@@ -294,4 +299,28 @@ function pad(number, size){
     return result + number;
 }
 
+function changeBackground(url){
+    loadImage(url, (image) => {
+        let body = document.querySelector("body");
+        body.style.background = "url("+image.src+")";
+    })
+}
+
+function getRandomCatBackground(){
+    fetch("https://api.thecatapi.com/v1/images/search").then(function(response) {
+        return response.json();
+    }).then(jsonData => {
+        changeBackground(jsonData[0].url);
+    }).catch(error => {
+        console.error(error);
+    });
+}
+
+function loadImage(url, callback){
+    let img = document.createElement("img");
+    img.onload = () => {
+        callback(img);
+    }
+    img.src = url;
+}
 //============== END FUNCTIONS ================ 

@@ -1,13 +1,16 @@
 # Changelog
 
-## [Version] - 2019-05-24
+## [0.0.4] - 2019-05-24
 
 ### Added
+
+- /help command
 
 ### Changed
 
 ### Fixed
 
+- Empty username are no longer added to dom (taking small space in front of message)
 - Black is base color for chat history
 - User-select in chat history
 

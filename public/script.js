@@ -4,7 +4,7 @@
 
 //================== MODELS =================
 class Message {
-    constructor(content="", user = new User()){
+    constructor(content="", user){
       this.dateCreated = new Date();
       this.content = content;
       this.user = user;
@@ -221,20 +221,15 @@ function parseCommand(message){
     return command;
 }
 
-function addMessage(message, user){
+function addMessage(message){
     let chat = document.querySelector("#chat-history");
     let messageContent = document.createElement("li");
     let date = document.createElement("span");
-    let userDom = document.createElement("span");
     let messageDom = document.createElement("span");
 
-    if(!user){
-        user = message.user;
-    }
+
 
     date.classList.add("date");
-    userDom.classList.add("username");
-    userDom.style.color = user.color;
     messageDom.classList.add(message.tag);
     console.log(message);
     if(message.color)
@@ -242,13 +237,20 @@ function addMessage(message, user){
 
     let dateObj = message.dateCreated;
     date.innerText = "["+pad(dateObj.getHours(),2)+":"+pad(dateObj.getMinutes(),2)+"]";
-    if(user.name){
-        userDom.innerText = user.name + ":";
-    }
     messageDom.innerText = message.content;
 
+
     messageContent.appendChild(date);
-    messageContent.appendChild(userDom);
+    //Append the user to the DOM only if a user is associated to the message
+    if(message.user){
+        let userDom = document.createElement("span");
+        userDom.classList.add("username");
+        userDom.style.color = message.user.color;
+        if(message.user.name){
+            userDom.innerText = message.user.name + ":";
+        }
+        messageContent.appendChild(userDom);
+    }
     messageContent.appendChild(messageDom);
 
     date.style.display = "none";
@@ -259,6 +261,7 @@ function addMessage(message, user){
     });
 
     chat.appendChild(messageContent);
+    //TODO: Only scroll if at bottom of scroll
     chat.scrollBy(0, chat.scrollHeight);
 }
 

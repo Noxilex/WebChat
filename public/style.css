@@ -293,12 +293,15 @@ body {
         justify-content: space-evenly;
     }
 
+    #chat-send-container * {
+        flex-grow: 1;
+    }
+
     #chat-container {
 		min-width: 0px;
 	}
 
     #chat-send {
-        flex-grow: 0;
         min-width: 0px;
         margin-right: 0px;
         margin-bottom: 5px;

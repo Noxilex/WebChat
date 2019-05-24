@@ -14,6 +14,7 @@ npm install
 ```bash
 npm start
 ```
+- Open browser on : `localhost:5001`
 
 ## TODO 
 

@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="/socket.io/socket.io.js"></script>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="/public/style.css"/>
-        <title>Web Chat</title>
-    </head>
-    <body>
-            <div id="chat-container" class="centered">
-                    <div id="join-chat" class="centered black">
-                        <input type="text" name="" class="input-rounded" id="nickName" size="20" minlength="3" maxlength="20" placeholder="Nickname (3 to 20 char)" required>
-                        <button class="buttonBlue" onclick="joinChat()">Join</button>
-                    </div>
-                    <ul id="chat-history">
 
-                    </ul>
-                    <div id="send-area">
-                        <input type="text" name="" id="chat-send" class="input-rounded" minlength="1" maxlength="255">
-                        <button class="buttonBlue" onclick="sendMessage()">Send</button>
-                    </div>
-        </div>
-        <div id="connected-users-container" class="black">
-            <label for="connected-users">
-                Connected Users:
-            </label>
-            <ul id="connected-users">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/style.css" />
+    <title>Web Chat</title>
+</head>
+
+<body>
+        <div id="join-chat" class="centered">
+                <input type="text" name="" class="input-rounded" id="nickName" size="20" minlength="3" maxlength="20"
+                    placeholder="Nickname (3 to 20 char)" required>
+                <button class="buttonBlue" onclick="joinChat()">Join</button>
+            </div>
+    <div class="container h-100">
+
+        <div id="chat-container" class="row">
+
+            <ul id="chat-history">
 
             </ul>
+            <div id="send-area">
+                <div id="actions">
+                    <button type="button" class="actions-btn" onclick="sendWizz()" id="wizzBtn">🤪</button>
+                </div>
+                <div id="chat-send-container">
+                    <input type="text" name="" id="chat-send" class="input-rounded" minlength="1" maxlength="255">
+                    <button class="buttonBlue" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="/public/script.js"></script>    
-    </body>
+    </div>
+
+    <div id="connected-users-container" class="black">
+        <label for="connected-users">
+            Connected Users:
+        </label>
+        <ul id="connected-users">
+
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="/public/script.js"></script>
+</body>
+
 </html>

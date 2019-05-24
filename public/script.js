@@ -117,7 +117,6 @@ socket.on("chatJoined", object => {
 		console.log("Chat joined");
 		joinArea.hidden = true;
 		updateMessages(messages);
-		chatTextArea.focus();
 	} else if (status == "KO") {
 		joinArea.hidden = false;
 		//TODO: Show error message for chat join error

@@ -26,6 +26,10 @@ body {
 	background-color: rgba(100, 100, 100, 0.7);
 }
 
+.shadowed {
+	box-shadow: 1px 5px 2px 2px #252525;
+}
+
 .centered {
 	position: absolute;
 	top: 50%;

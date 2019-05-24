@@ -43,7 +43,7 @@ body {
     border-radius: 2em 2em 2em 2em;
 }
 
-#chat-container #join-chat{
+#join-chat{
     padding:2em;
 }
 
@@ -113,8 +113,6 @@ body {
     padding: 10px;
 }
 
-#send-area button {}
-
 #chat-history {
     list-style: none;
     margin: auto;
@@ -179,17 +177,12 @@ body {
     border: 1px solid white;
 }
 
-<<<<<<< HEAD
-@media only screen and (max-width:500px) {
-    #connected-users-container {
-=======
 .show {
     visibility: visible;
 }
 
 @media only screen and (max-width:500px){
     #connected-users-container{
->>>>>>> b2fad3bc434994f68a3c9d1cfe0cf5f4a92e2aeb
         display: none;
     }
 

@@ -160,15 +160,14 @@ socket.on("disconnected", () => {
 // reçois lors d'un wizz
 socket.on("doWizz", () => {
 	var container = document.querySelector("#chat-container");
-	// si la class existe , return;
-	if (container.classList.contains("wizzAnimation")) return;
+	// si la class existe , la remove;
+	if (container.classList.contains("wizzAnimation")) container.classList.remove("wizzAnimation");
 
 	// sinon
 	container.classList.add("wizzAnimation");
-	setTimeout(function() {
-		//do what you need here
+	setTimeout(function () {
 		container.classList.remove("wizzAnimation");
-	}, 1000);
+	}, 300);
 });
 
 //=============== END SOCKETS ===================

@@ -36,7 +36,7 @@ npm start
 - [ ] Animations on click, onmessage
 - [ ] Timeout before sending new message
 - [ ] Auto-reconnect after DC
-- [ ] Don't send message on empty/space message
+- [X] Don't send message on empty/space message
 
 ## Suggestion
 

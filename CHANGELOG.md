@@ -9,6 +9,7 @@
 
 ### Changed
 
+- Removed focus on chatTextArea after join
 - Now shows date on mobile when we press the message
 
 ### Fixed

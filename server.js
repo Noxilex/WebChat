@@ -28,6 +28,7 @@ setInterval(() => {
 //APP
 class Message {
 	constructor(content, user) {
+		this.id;
 		this.user = user;
 		this.content = content;
 		this.dateCreated = new Date();
@@ -251,7 +252,7 @@ function addNewMessage(message, user) {
 	console.log(messageAdded.user, " ", messageAdded.content);
 
 	//Broadcast message to everyone
-	io.emit("newMessage", messageAdded);
+	io.to("chat").emit("newMessage", messageAdded);
 }
 
 function getUserIndex(users, socketID) {

@@ -6,6 +6,7 @@
 //================== MODELS =================
 class Message {
 	constructor(content = "", user) {
+		this.id;
 		this.dateCreated = new Date();
 		this.content = content;
 		this.user = user;
@@ -28,6 +29,12 @@ var msgType = {
 	message: "message"
 };
 
+var alignType = {
+	start: "flex-start",
+	center: "center",
+	end: "flex-end"
+}
+
 //================== END MODELS =================
 
 //================== EXEC CODE ==================
@@ -37,7 +44,8 @@ var socket = io();
 var chatTextArea = document.querySelector("#chat-send");
 var inputJoin = document.querySelector("#join-chat input");
 //var messageElement = document.querySelector("#chat-history li");
-//var messages = [];
+var messages = [];
+var msgIdx = 0;
 var connectedUsers = [];
 
 inputJoin.focus();
@@ -106,6 +114,10 @@ socket.on("newMessage", msgData => {
 	if (msgData.tag) {
 		message.tag = msgData.tag;
 	}
+	//Current user
+	if(msgData.user.id == socket.id){
+		message.align = alignType.end;
+	}
 	addMessage(message);
 });
 
@@ -169,6 +181,11 @@ socket.on("doWizz", () => {
 		//do what you need here
 		container.classList.remove("wizzAnimation");
 	}, 1000);
+});
+
+socket.on("messageDelivered", (messageID) => {
+	//Validate id message
+
 });
 
 //=============== END SOCKETS ===================
@@ -264,51 +281,68 @@ function addMessage(message) {
 	let date = document.createElement("span");
 	let messageDom = document.createElement("span");
 
-	date.classList.add("date");
-	if (message.tag) {
-		let tagList = message.tag.split(",");
-		tagList.forEach(tag => {
-			messageDom.classList.add(tag);
+	if(message){
+
+		message.id = msgIdx;
+		messages[msgIdx] = {
+			object: message,
+			dom: messageDom
+		};
+
+		msgIdx++;
+
+		date.classList.add("date");
+		if (message.tag) {
+			let tagList = message.tag.split(",");
+			tagList.forEach(tag => {
+				messageDom.classList.add(tag);
+			});
+		}
+	
+		if (message.color) messageDom.style.color = message.color;
+	
+		let dateObj = message.dateCreated;
+		date.innerText =
+			"[" +
+			pad(dateObj.getHours(), 2) +
+			":" +
+			pad(dateObj.getMinutes(), 2) +
+			"]";
+		messageDom.innerText = message.content;
+	
+		if (message.align) {
+			messageContent.style.alignSelf = message.align;
+		}
+		messageContent.classList.add()
+		messageContent.appendChild(date);
+		//Append the user to the DOM only if a user is associated to the message
+		if (message.user) {
+			let userDom = document.createElement("span");
+			userDom.classList.add("username");
+			userDom.style.color = message.user.color;
+			if (message.user.name) {
+				userDom.innerText = message.user.name + ":";
+			}
+			messageContent.appendChild(userDom);
+		}
+		messageContent.appendChild(messageDom);
+	
+		messageContent.addEventListener("click", () => {
+			//Toggle on/off
+			console.log(date);
+			if (date.classList.contains("show-inline")) {
+				date.classList.remove("show-inline");
+			} else {
+				date.classList.add("show-inline");
+			}
 		});
+	
+		chat.appendChild(messageContent);
+		//TODO: Only scroll if at bottom of scroll
+		chat.scrollBy(0, chat.scrollHeight);
+	}else{
+		throw new Error("No message to add");
 	}
-
-	if (message.color) messageDom.style.color = message.color;
-
-	let dateObj = message.dateCreated;
-	date.innerText =
-		"[" +
-		pad(dateObj.getHours(), 2) +
-		":" +
-		pad(dateObj.getMinutes(), 2) +
-		"]";
-	messageDom.innerText = message.content;
-
-	messageContent.appendChild(date);
-	//Append the user to the DOM only if a user is associated to the message
-	if (message.user) {
-		let userDom = document.createElement("span");
-		userDom.classList.add("username");
-		userDom.style.color = message.user.color;
-		if (message.user.name) {
-			userDom.innerText = message.user.name + ":";
-		}
-		messageContent.appendChild(userDom);
-	}
-	messageContent.appendChild(messageDom);
-
-	messageContent.addEventListener("click", () => {
-		//Toggle on/off
-		console.log(date);
-		if (date.classList.contains("show-inline")) {
-			date.classList.remove("show-inline");
-		} else {
-			date.classList.add("show-inline");
-		}
-	});
-
-	chat.appendChild(messageContent);
-	//TODO: Only scroll if at bottom of scroll
-	chat.scrollBy(0, chat.scrollHeight);
 }
 
 function updateConnectedUsers(newUsers) {

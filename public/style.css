@@ -131,6 +131,9 @@ body {
 }
 
 #chat-history {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-start;
 	list-style: none;
 	margin: auto;
     padding: 0;

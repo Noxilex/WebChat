@@ -150,7 +150,10 @@ body {
 #chat-history li {
 	padding: 5px;
 	font-size: 1em;
-    margin-bottom: 5px;
+	margin-bottom: 5px;
+	/* Replace min height by box size or something, so the li doesn't get squiched
+	when the keyboard gets activated */
+	min-height:36px;
 	border: 1px solid rgba(100, 100, 100, 0.5);
 	border-radius: 5px;
 	background-color: rgba(245, 245, 245, 0.5);

@@ -37,6 +37,7 @@ npm start
 - [ ] Timeout before sending new message
 - [ ] Auto-reconnect after DC
 - [X] Don't send message on empty/space message
+- [ ] Scroll all the way to the bottom when you focus chat (phones)
 
 ## Suggestion
 

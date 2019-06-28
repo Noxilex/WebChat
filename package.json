@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "open" : "start http://localhost:5001",
-    "start": "node server.js"
+    "open": "start http://localhost:5001",
+    "start": "node server.js",
+    "build-docker": "docker build -t webchat_api .",
+    "run-docker": "docker run --rm --name webchat_api -d -p 5001:5001 webchat_api"
   },
   "author": "Benjamin D'Hoop",
   "license": "ISC",

@@ -40,7 +40,7 @@ var alignType = {
 //================== EXEC CODE ==================
 
 // eslint-disable-next-line no-undef
-var socket = io("localhost:5001");
+var socket = io(window.location.hostname + ":" + window.location.port);
 var chatTextArea = document.querySelector("#chat-send");
 var inputJoin = document.querySelector("#join-chat input");
 //var messageElement = document.querySelector("#chat-history li");

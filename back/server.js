@@ -2,20 +2,12 @@
 const express = require("express");
 const fetch = require("node-fetch");
 var http = require("http");
-var path = require("path");
+//var path = require("path");
 const socketIO = require("socket.io");
 
 const api = express();
 const server = http.createServer(api);
 var io = socketIO(server);
-
-// API
-api.use("/public", express.static(__dirname + "/public"));
-
-// Routing
-api.get("/", function(request, response) {
-	response.sendFile(path.join(__dirname, "public/index.html"));
-});
 
 generateCatBackground();
 setInterval(() => {
@@ -315,6 +307,6 @@ function sendCatBackground(socket) {
 }
 
 // Starts the server.
-server.listen(5001, "0.0.0.0", function() {
+server.listen(5001, function() {
 	console.log("Started server on port 5001");
 });
